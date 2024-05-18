@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Level 1 - STEM ELITES CLUB CTF</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://source.unsplash.com/1600x900/?science'); /* Slightly different background */
+            background-size: cover;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(28, 32, 48, 0.85);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 5px rgba(0, 140, 255, 0.75);
+            text-align: center;
+            border: 1px solid #007bff;
+        }
+        h1 {
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        h2 {
+            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #ccd6f6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007bff;
+            border: 2px solid #00c6ff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px #00c6ff;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+            box-shadow: 0 0 15px #ffec83;
+        }
+        .input-field {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #007bff;
+        }
+    </style>
+    <script>
+        function validateAnswer() {
+            const userAnswer = document.getElementById('answer').value;
+            const correctAnswer = "42"; // Replace with the actual correct answer
+            if(userAnswer === correctAnswer) {
+                document.getElementById('successMessage').innerText = "Correct! The password for the next level is: LEVEL2PASS";
+                document.getElementById('nextLevelButton').style.display = 'block';
+            } else {
+                document.getElementById('successMessage').innerText = "Wrong answer, try again!";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>STEM ELITES CLUB</h1>
+        <h2>Level 1 - Basic Math Puzzle</h2>
+        <p>Solve this puzzle: What is the answer to life, the universe, and everything?</p>
+        <input type="text" id="answer" class="input-field" placeholder="Enter your answer here">
+        <button onclick="validateAnswer()" class="btn">Submit Answer</button>
+        <p id="successMessage"></p>
+        <a href="level2.html" id="nextLevelButton" class="btn" style="display:none;">Proceed to Level 2</a>
+    </div>
+</body>
+</html>
