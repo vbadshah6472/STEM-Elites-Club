@@ -9,9 +9,10 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://source.unsplash.com/1600x900/?science'); /* Slightly different background */
+            background-image: url('https://source.unsplash.com/1600x900/?technology');
             background-size: cover;
             color: white;
+            user-select: none; /* Prevent text selection */
         }
         .container {
             max-width: 800px;
@@ -22,74 +23,138 @@
             box-shadow: 0px 0px 15px 5px rgba(0, 140, 255, 0.75);
             text-align: center;
             border: 1px solid #007bff;
+            position: relative;
         }
-        h1 {
+        .scoreboard {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+            border-radius: 8px;
+            box-shadow: 0 0 15px 5px rgba(255, 237, 131, 0.8);
+            color: #fff;
+            text-align: center;
+            font-size: 16px;
+        }
+        h1, h2 {
             background: linear-gradient(to right, #6a11cb, #2575fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
             font-size: 2.5em;
-        }
-        h2 {
-            background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            text-shadow: 0px 0px 8px rgba(106, 17, 203, 0.8);
             margin-bottom: 20px;
-            font-size: 24px;
         }
-        p {
+        h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        .puzzle {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #00c6ff;
+            border-radius: 5px;
             font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 25px;
-            color: #ccd6f6;
+            color: #000;
+            background-color: #fff;
+            box-shadow: none;
         }
         .btn {
-            display: inline-block;
             padding: 10px 20px;
             font-size: 18px;
             color: #fff;
             background-color: #007bff;
-            border: 2px solid #00c6ff;
+            border: 2px solid #007bff;
             border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none;
             box-shadow: 0 0 15px #00c6ff;
         }
         .btn:hover {
             background-color: #0056b3;
+            border-color: #0056b3;
             box-shadow: 0 0 15px #ffec83;
         }
-        .input-field {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #007bff;
+        .message {
+            margin-top: 20px;
         }
-    </style>
-    <script>
-        function validateAnswer() {
-            const userAnswer = document.getElementById('answer').value;
-            const correctAnswer = "42"; // Replace with the actual correct answer
-            if(userAnswer === correctAnswer) {
-                document.getElementById('successMessage').innerText = "Correct! The password for the next level is: LEVEL2PASS";
-                document.getElementById('nextLevelButton').style.display = 'block';
-            } else {
-                document.getElementById('successMessage').innerText = "Wrong answer, try again!";
+        .next-level-btn {
+            display: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+            position: relative;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 20px; /* Added margin */
+            animation: shine 2s infinite; /* Added shining effect */
+        }
+        @keyframes shine {
+            0% {
+                box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+            }
+            50% {
+                box-shadow: 0 0 20px rgba(76, 175, 80, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
             }
         }
-    </script>
+    </style>
 </head>
-<body>
+<body oncopy="return false" onpaste="return false" oncut="return false">
     <div class="container">
+        <div class="scoreboard">
+            <h3>Score: <span id="score">0</span></h3>
+        </div>
         <h1>STEM ELITES CLUB</h1>
-        <h2>Level 1 - Basic Math Puzzle</h2>
-        <p>Solve this puzzle: What is the answer to life, the universe, and everything?</p>
-        <input type="text" id="answer" class="input-field" placeholder="Enter your answer here">
-        <button onclick="validateAnswer()" class="btn">Submit Answer</button>
-        <p id="successMessage"></p>
-        <a href="level2.html" id="nextLevelButton" class="btn" style="display:none;">Proceed to Level 2</a>
+        <h2>Level 1</h2>
+        <p class="puzzle">What is the sum of 12 and 15?</p>
+        <div>
+            <input type="text" id="answerInput" placeholder="Enter your answer" onkeypress="if(event.keyCode == 13) {checkAnswer();}">
+            <button class="btn" onclick="checkAnswer()">Submit</button>
+        </div>
+        <div class="message" id="message"></div>
+        <button class="next-level-btn" onclick="window.location.href='level2.html'">Proceed to Next Level</button>
     </div>
+    <script>
+        let score = 0;
+        let incorrectAttempts = 0;
+
+        function checkAnswer() {
+            const userAnswer = document.getElementById("answerInput").value.trim();
+            const correctAnswer = "27"; // Adjust based on actual answer
+            if (userAnswer === correctAnswer) {
+                const randomPassword = Math.random().toString(36).substring(2, 10);
+                document.getElementById("message").innerHTML = `<span style='color: green;'>Correct! Your password for the next level is: ${randomPassword}</span>`;
+                document.querySelector('.next-level-btn').style.display = 'block'; // Show next level button
+                updateScore(10);
+                incorrectAttempts = 0;
+                document.getElementById("answerInput").value = ""; // Clear input field after correct answer
+            } else {
+                document.getElementById("message").innerHTML = "<span style='color: red;'>Incorrect. Try again.</span>";
+                incorrectAttempts++;
+                if (incorrectAttempts % 3 === 0 && incorrectAttempts >= 3) {
+                    updateScore(-2); // Decrease score after 3 consecutive incorrect attempts
+                }
+            }
+        }
+
+        function updateScore(points) {
+            score += points;
+            document.getElementById("score").innerText = score;
+        }
+    </script>
 </body>
 </html>
+
