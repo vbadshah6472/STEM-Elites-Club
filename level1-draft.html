@@ -112,7 +112,7 @@
         }
         /* Skip Button Styles */
         .skip-btn {
-            position: fixed;
+            position: absolute;
             bottom: 20px;
             left: 20px;
             padding: 10px 20px;
@@ -131,7 +131,7 @@
         }
         /* Skip Button Warning Styles */
         .skip-warning {
-            position: fixed;
+            position: absolute;
             bottom: 50px;
             left: 50%;
             transform: translateX(-50%);
@@ -167,16 +167,15 @@
             <button class="btn" onclick="checkAnswer()">Submit</button>
         </div>
         <div class="message" id="message"></div>
-        <button class="next-level-btn" onclick="window.location
-.href='level2.html'">Proceed to Next Level</button>
-    </div>
-    <!-- Skip Button -->
-    <button class="skip-btn" onclick="showSkipWarning()">Skip Level</button>
-    <!-- Skip Warning Message -->
-    <div class="skip-warning" id="skipWarning">
-        Warning: Skipping a level will decrease your score. Are you sure you want to skip?
-        <button onclick="hideSkipWarning()">Cancel</button>
-        <button onclick="skipLevel()">Yes, Skip</button>
+        <button class="next-level-btn" onclick="window.location.href='level2.html'">Proceed to Next Level</button>
+        <!-- Skip Button -->
+        <button class="skip-btn" onclick="showSkipWarning()">Skip Level</button>
+        <!-- Skip Warning Message -->
+        <div class="skip-warning" id="skipWarning">
+            Warning: Skipping a level will decrease your score. You have 3 chances to skip throughout the contest with no negative marking.
+            <button onclick="hideSkipWarning()">Cancel</button>
+            <button onclick="skipLevel()">Yes, Skip</button>
+        </div>
     </div>
     <script>
         let score = 0;
@@ -217,7 +216,8 @@
 
         function skipLevel() {
             // Adjust score if needed
-            updateScore(-5); // Decrease score when skipping a level
+            // Decrease score when skipping a level
+            updateScore(-5);
             // Redirect to next level or destination
             window.location.href = 'level2.html'; // Change URL accordingly
         }
