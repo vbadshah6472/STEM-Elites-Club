@@ -115,15 +115,15 @@
             position: absolute;
             bottom: 20px;
             left: 20px;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 5px 10px;
+            font-size: 14px;
             color: #fff;
             background-color: #ff4d4d; /* Red background */
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            box-shadow: 0 0 15px rgba(255, 77, 77, 0.8);
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
             z-index: 999; /* Ensure it's above other elements */
         }
         .skip-btn:hover {
@@ -169,17 +169,17 @@
         <div class="message" id="message"></div>
         <button class="next-level-btn" onclick="window.location.href='level2.html'">Proceed to Next Level</button>
         <!-- Skip Button -->
-        <button class="skip-btn" onclick="showSkipWarning()">Skip Level</button>
+        <button class="skip-btn" onclick="showSkipWarning()">Skip (3)</button>
         <!-- Skip Warning Message -->
         <div class="skip-warning" id="skipWarning">
-            Warning: Skipping a level will decrease your score. You have 3 chances to skip throughout the contest with no negative marking.
+            Warning: Skipping a level will not incur negative marking. You have 3 chances to skip throughout the contest.
             <button onclick="hideSkipWarning()">Cancel</button>
             <button onclick="skipLevel()">Yes, Skip</button>
         </div>
     </div>
     <script>
         let score = 0;
-        let incorrectAttempts = 0;
+        let skipsLeft = 3; // Initial number of skips
 
         function checkAnswer() {
             const userAnswer = document.getElementById("answerInput").value.trim();
@@ -189,14 +189,9 @@
                 document.getElementById("message").innerHTML = `<span style='color: green;'>Correct! Your password for the next level is: ${randomPassword}</span>`;
                 document.querySelector('.next-level-btn').style.display = 'block'; // Show next level button
                 updateScore(10);
-                incorrectAttempts = 0;
                 document.getElementById("answerInput").value = ""; // Clear input field after correct answer
             } else {
                 document.getElementById("message").innerHTML = "<span style='color: red;'>Incorrect. Try again.</span>";
-                incorrectAttempts++;
-                if (incorrectAttempts % 3 === 0 && incorrectAttempts >= 3) {
-                    updateScore(-2); // Decrease score after 3 consecutive incorrect attempts
-                }
             }
         }
 
@@ -215,12 +210,20 @@
         }
 
         function skipLevel() {
-            // Adjust score if needed
-            // Decrease score when skipping a level
-            updateScore(-5);
+            // Decrement skips left
+            skipsLeft--;
+            updateSkipButtonText();
             // Redirect to next level or destination
             window.location.href = 'level2.html'; // Change URL accordingly
         }
+
+        // Update skip button text with remaining skips
+        function updateSkipButtonText() {
+            document.querySelector('.skip-btn').innerText = `Skip (${skipsLeft})`;
+        }
+        
+        // Initially update skip button text
+        updateSkipButtonText();
     </script>
 </body>
 </html>
