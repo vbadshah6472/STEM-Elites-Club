@@ -12,7 +12,6 @@
             background-image: url('https://source.unsplash.com/1600x900/?technology');
             background-size: cover;
             color: white;
-            user-select: none; /* Prevent text selection */
         }
         .container {
             max-width: 800px;
@@ -52,6 +51,7 @@
         .puzzle {
             font-size: 18px;
             margin-bottom: 20px;
+            user-select: none; /* Prevent text selection */
         }
         input[type="text"] {
             padding: 10px;
@@ -110,9 +110,19 @@
                 box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
             }
         }
+        .copied-notification {
+            display: none;
+            color: yellow;
+            margin-top: 10px;
+            animation: fadeOut 2s forwards;
+        }
+        @keyframes fadeOut {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
     </style>
 </head>
-<body oncopy="return false" onpaste="return false" oncut="return false">
+<body>
     <div class="container">
         <div class="scoreboard">
             <h3>Score: <span id="score">0</span></h3>
@@ -125,23 +135,40 @@
             <button class="btn" onclick="checkAnswer()">Submit</button>
         </div>
         <div class="message" id="message"></div>
+        <div class="copied-notification" id="copiedNotification">Password copied to clipboard!</div>
         <button class="next-level-btn" onclick="window.location.href='level2.html'">Proceed to Next Level</button>
     </div>
     <script>
         let score = 0;
         let incorrectAttempts = 0;
+        const level2Password = 'level2Pass1234'; // Specific password for level 2
+        let hasAnsweredCorrectly = false;
 
         function checkAnswer() {
             const userAnswer = document.getElementById("answerInput").value.trim();
-            const correctAnswer = "27"; // Adjust based on actual answer
-            if (userAnswer === correctAnswer) {
-                const randomPassword = Math.random().toString(36).substring(2, 10);
-                document.getElementById("message").innerHTML = `<span style='color: green;'>Correct! Your password for the next level is: ${randomPassword}</span>`;
+            const correctAnswer = "27"; // The correct answer for the puzzle
+            if (userAnswer === correctAnswer && !hasAnsweredCorrectly) {
+                document.getElementById("message").innerHTML = `<span style='color: green;'>Correct! Your password for the next level is: <span id="password">${level2Password}</span></span>`;
                 document.querySelector('.next-level-btn').style.display = 'block'; // Show next level button
                 updateScore(10);
                 incorrectAttempts = 0;
+                hasAnsweredCorrectly = true;
                 document.getElementById("answerInput").value = ""; // Clear input field after correct answer
-            } else {
+
+                // Make the password selectable and copyable
+                const passwordSpan = document.getElementById("password");
+                passwordSpan.style.userSelect = "text";
+                passwordSpan.style.cursor = "pointer";
+                passwordSpan.addEventListener("click", () => {
+                    const range = document.createRange();
+                    range.selectNodeContents(passwordSpan);
+                    const selection = window.getSelection();
+                    selection.removeAllRanges();
+                    selection.addRange(range);
+                    document.execCommand("copy");
+                    showCopiedNotification();
+                });
+            } else if (!hasAnsweredCorrectly) {
                 document.getElementById("message").innerHTML = "<span style='color: red;'>Incorrect. Try again.</span>";
                 incorrectAttempts++;
                 if (incorrectAttempts % 3 === 0 && incorrectAttempts >= 3) {
@@ -154,7 +181,14 @@
             score += points;
             document.getElementById("score").innerText = score;
         }
+
+        function showCopiedNotification() {
+            const notification = document.getElementById("copiedNotification");
+            notification.style.display = "block";
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 2000);
+        }
     </script>
 </body>
 </html>
-
