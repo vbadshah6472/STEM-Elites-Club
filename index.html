@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login To The Stem Elites Club</title>
+    <title>STEM Elites Club</title>
     <link rel="stylesheet" href="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous">
     <style>
         * {
@@ -105,7 +105,7 @@
             font-size: 1.5em;
             text-transform: uppercase;
             font-weight: 600;
-            margin: 10px 0;
+            margin: 12px 0;
             cursor: pointer;
             transition: all 0.5s;
             background: linear-gradient(to right, #28b487, #007d46);
@@ -113,7 +113,7 @@
         }
         #btn:hover {
             background: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
         }
         .forget-password {
             background: linear-gradient(to right, #ff4d4d, #ff1a1a); /* Red gradient */
@@ -133,17 +133,17 @@
             justify-content: space-between;
             width: 100%;
             padding: 0 10px;
-            margin-top: 10px; /* Add some margin */
+            margin-top: 25px; /* Add some margin */
         }
         .forget-password-container label {
             color: #fff; /* White gradient for the label */
-            margin-left: 0px; /* Add some space between the checkbox and label */
+            margin-left: 0px; /* Adjust margin to align text with checkbox */
         }
         .message-box {
-            background-color: rgba(228, 13, 13, 0.8); /* More opaque background */
-            padding: 5px 10px;
-            border-radius: 10px;
-            color: #fff;
+            background-color: rgba(194, 7, 7, 0.8); /* More opaque background */
+            padding: 10px 10px;
+            border-radius: 8px;
+            color: #f2f5f5;
             font-size: 0.9em;
             position: absolute;
             right: 10px;
@@ -169,8 +169,9 @@
                 <i class="fa-solid fa-lock"></i>
             </div>
             <div class="forget-password-container">
-                <input type="checkbox" id="rememberMe" value="rememberMe"><p>Remember Me&nbsp;&nbsp;&nbsp;&nbsp;</p>
-                <a href="#" class="forget-password">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forgot Password?</a>
+                <input type="checkbox" id="rememberMe" value="rememberMe">
+                <label for="rememberMe">Remember Me&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <a href="#" class="forget-password">&nbsp;&nbsp;&nbsp;&nbsp;Forgot Password?</a>
             </div>
             <div class="message-box" id="messageBox">Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!</div>
             <input id="btn" type="submit" value="Login">
@@ -179,31 +180,31 @@
     </div>
     <script>
         const forgetPasswordButton = document.querySelector('.forget-password');
-        const messageBox = document.getElementById('messageBox
-);
-const messageText = "Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!";
-function typeMessage(text, element) {
-        let i = 0;
-        element.textContent = '';
-        const interval = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text[i];
-                i++;
-            } else {
-                clearInterval(interval);
-                setTimeout(() => {
-                    element.style.display = 'none';
-                }, 2500); // Holds the message for 2.5 seconds after typing
-            }
-        }, 100); // Slower typing speed
-    }
-    
-    function showMessage() {
-        messageBox.style.display = 'block';
-        typeMessage(messageText, messageBox);
-    }
+        const messageBox = document.getElementById('messageBox');
+        const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
+        
+        function typeMessage(text, element) {
+            let i = 0;
+            element.textContent = '';
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        element.style.display = 'none';
+                    }, 2500); // Holds the message for 2.5 seconds after typing
+                }
+            }, 100); // Slower typing speed
+        }
+        
+        function showMessage() {
+            messageBox.style.display = 'block';
+            typeMessage(messageText, messageBox);
+        }
 
-    forgetPasswordButton.addEventListener('click', showMessage);
-</script>
+        forgetPasswordButton.addEventListener('click', showMessage);
+    </script>
 </body>
 </html>
