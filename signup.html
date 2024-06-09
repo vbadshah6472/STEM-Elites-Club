@@ -297,7 +297,7 @@
                <div class="form-nav">
                     <button type="button" class="btn-step" id="nextBtn">Continue</button>
                 </div>
-                <p>Already have an account? <a href="login.html">Login</a></p>
+                <p>Already have an account? <a href="index.html">Login</a></p>
             </div>
             <div class="form-step">
                 <div class="form-group">
@@ -348,7 +348,7 @@
                     <button type="button" class="btn-step" id="prevBtn2">Previous</button>
                     <button type="submit" class="btn-step">Register</button>
                 </div>
-                <p>Already have an account? <a href="login.html">Login</a></p>
+                <p>Already have an account? <a href="index.html">Login</a></p>
             </div>
         </form>
         <div class="success-message" id="successMessage"></div>
@@ -357,7 +357,7 @@
        document.getElementById('nextBtn').addEventListener('click', function() {
             document.querySelector('.form-step.active').classList.remove('active');
             document.querySelectorAll('.form-step')[1].classList.add('active');
-            document.getElementById('welcome-elites').innerText = 'Enter Your Academic Details';
+            document.getElementById('welcome-elites').innerText = 'Enter Academic Details';
         });
 
         document.getElementById('nextBtn1').addEventListener('click', function() {
@@ -375,7 +375,7 @@
         document.getElementById('prevBtn2').addEventListener('click', function() {
             document.querySelector('.form-step.active').classList.remove('active');
             document.querySelectorAll('.form-step')[1].classList.add('active');
-            document.getElementById('welcome-elites').innerText = 'Enter Your Academic Details';
+            document.getElementById('welcome-elites').innerText = 'Enter Academic Details';
         });
 
         function togglePassword(inputId, toggleIcon) {
