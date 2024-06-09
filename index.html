@@ -150,17 +150,28 @@
             display: none;
             max-width: 300px;
             text-align: center;
+        
         }
+
+        #welcome-back {
+    font-size: 23px;
+    background: linear-gradient(to right, #06f019, #8DC26F);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 5px;
+}
+
     </style>
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="container">
         <h2>STEM ELITES CLUB</h2>
+        <h3 id="welcome-back">Welcome Back Elites</h3>
         <form action="">
             <div class="form-group">
-                <input type="number" pattern="\d*" required>
-                <label for="TeamID">TeamID</label>
+                <input type="text" required>
+                <label for="username">Username</label>
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="form-group">
@@ -175,7 +186,7 @@
             </div>
             <div class="message-box" id="messageBox">Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!</div>
             <input id="btn" type="submit" value="Login">
-            <p>Don't have an account? <a href="register.html">Register</a></p>
+            <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
     <script>
@@ -206,5 +217,43 @@
 
         forgetPasswordButton.addEventListener('click', showMessage);
     </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
 </body>
 </html>
