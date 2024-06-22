@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM Elites Club</title>
+    <link rel="stylesheet" href="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous">
+    <style>
+        /* Your existing CSS styles */
+        /* ... */
+    </style>
+    <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>STEM ELITES CLUB</h2>
+        <h3 id="welcome-back">Welcome Back Elites</h3>
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="userid" required>
+                <label for="userid">UserID</label>
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" minlength="4" required>
+                <label for="password">Password</label>
+                <i class="fa-solid fa-lock"></i>
+            </div>
+            <div class="forget-password-container">
+                <input type="checkbox" id="rememberMe" value="rememberMe">
+                <label for="rememberMe">Remember Me&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <a href="#" class="forget-password">&nbsp;&nbsp;&nbsp;&nbsp;Forgot Password?</a>
+            </div>
+            <div class="message-box" id="messageBox">Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!</div>
+            <input id="btn" type="submit" value="Login">
+            <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
+        </form>
+    </div>
+    <script>
+        const forgetPasswordButton = document.querySelector('.forget-password');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
+
+        function typeMessage(text, element) {
+            let i = 0;
+            element.textContent = '';
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    element.textContent += text[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        element.style.display = 'none';
+                    }, 2500); // Holds the message for 2.5 seconds after typing
+                }
+            }, 100); // Slower typing speed
+        }
+
+        function showMessage() {
+            messageBox.style.display = 'block';
+            typeMessage(messageText, messageBox);
+        }
+
+        forgetPasswordButton.addEventListener('click', showMessage);
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
+            authDomain: "stem-elites-club.firebaseapp.com",
+            databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
+            projectId: "stem-elites-club",
+            storageBucket: "stem-elites-club.appspot.com",
+            messagingSenderId: "1005959264968",
+            appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const userID = document.getElementById('userid').value;
+            const password = document.getElementById('password').value;
+
+            database.ref('users/' + userID).once('value').then((snapshot) => {
+                if (snapshot.exists()) {
+                    const userData = snapshot.val();
+                    if (userData.password === password) {
+                        // Password matches
+                        // Redirect to admin dashboard
+                        window.location.href = 'admin_dashboard.html';
+                    } else {
+                        // Incorrect password
+                        alert('Incorrect UserID or Password');
+                    }
+                } else {
+                    // UserID does not exist
+                    alert('Incorrect UserID or Password');
+                }
+            }).catch((error) => {
+                console.error(error);
+                alert('An error occurred while logging in');
+            });
+        });
+    </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+</body>
+</html>
