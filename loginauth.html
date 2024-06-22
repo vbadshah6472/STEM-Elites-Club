@@ -162,13 +162,7 @@
 }
 
     </style>
-    
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
-    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-    <!-- Add Firebase products that you want to use -->
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
 </head>
 <body>
     <div class="container">
@@ -195,7 +189,23 @@
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
+    authDomain: "stem-elites-club.firebaseapp.com",
+    databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
+    projectId: "stem-elites-club",
+    storageBucket: "stem-elites-club.appspot.com",
+    messagingSenderId: "1005959264968",
+    appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
+  };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
         const forgetPasswordButton = document.querySelector('.forget-password');
         const messageBox = document.getElementById('messageBox');
         const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
@@ -223,86 +233,24 @@
 
         forgetPasswordButton.addEventListener('click', showMessage);
 
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
-            authDomain: "stem-elites-club.firebaseapp.com",
-            databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
-            projectId: "stem-elites-club",
-            storageBucket: "stem-elites-club.appspot.com",
-            messagingSenderId: "1005959264968",
-            appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
-        };
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent the form from submitting the default way
 
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
-
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            const userID = document.getElementById('userid').value;
+            const userId = document.getElementById('userid').value;
             const password = document.getElementById('password').value;
 
-            database.ref('users/' + userID).once('value').then((snapshot) => {
-                if (snapshot.exists()) {
-                    const userData = snapshot.val();
-                    if (userData.password === password) {
-                        // Password matches
-                        // Redirect to admin dashboard
-                        window.location.href = 'admin_dashboard.html';
-                    } else {
-                        // Incorrect password
-                        alert('Incorrect UserID or Password');
-                    }
-                } else {
-                    // UserID does not exist
-                    alert('Incorrect UserID or Password');
-                }
-            }).catch((error) => {
-                console.error(error);
-                alert('An error occurred while logging in');
-            });
+            firebase.auth().signInWithEmailAndPassword(userId, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    window.location.href = 'admin_dashboard.html'; // Redirect to admin dashboard
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    alert(errorMessage);
+                });
         });
     </script>
-<!-- Code injected by live-server -->
-<script>
-	// <![CDATA[  <-- For SVG support
-	if ('WebSocket' in window) {
-		(function () {
-			function refreshCSS() {
-				var sheets = [].slice.call(document.getElementsByTagName("link"));
-				var head = document.getElementsByTagName("head")[0];
-				for (var i = 0; i < sheets.length; ++i) {
-					var elem = sheets[i];
-					var parent = elem.parentElement || head;
-					parent.removeChild(elem);
-					var rel = elem.rel;
-					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
-						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
-						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
-					}
-					parent.appendChild(elem);
-				}
-			}
-			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
-			var address = protocol + window.location.host + window.location.pathname + '/ws';
-			var socket = new WebSocket(address);
-			socket.onmessage = function (msg) {
-				if (msg.data == 'reload') window.location.reload();
-				else if (msg.data == 'refreshcss') refreshCSS();
-			};
-			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
-				console.log('Live reload enabled.');
-				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
-			}
-		})();
-	}
-	else {
-		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
-	}
-	// ]]>
-</script>
 </body>
 </html>
