@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEM Elites Club</title>
     <link rel="stylesheet" href="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous">
+    <!-- Firebase JavaScript SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js"></script>
+
     <style>
         * {
             margin: 0;
@@ -193,7 +197,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
     <script>
  <script>
-  // Your web app's Firebase configuration
+  // Web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
     authDomain: "stem-elites-club.firebaseapp.com",
@@ -203,54 +207,37 @@
     messagingSenderId: "1005959264968",
     appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
   };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+    
+firebase.initializeApp(firebaseConfig);
 
-        const forgetPasswordButton = document.querySelector('.forget-password');
-        const messageBox = document.getElementById('messageBox');
-        const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
+// Get references to the form elements
+const loginForm = document.querySelector('form');
+const userIdInput = document.querySelector('input[type="text"]');
+const passwordInput = document.querySelector('input[type="password"]');
 
-        function typeMessage(text, element) {
-            let i = 0;
-            element.textContent = '';
-            const interval = setInterval(() => {
-                if (i < text.length) {
-                    element.textContent += text[i];
-                    i++;
-                } else {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        element.style.display = 'none';
-                    }, 2500); // Holds the message for 2.5 seconds after typing
-                }
-            }, 100); // Slower typing speed
-        }
+// Add event listener to the login form
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
 
-        function showMessage() {
-            messageBox.style.display = 'block';
-            typeMessage(messageText, messageBox);
-        }
+    const userId = userIdInput.value + "@stemelitesclub.com"; // Append domain to form UserID
+    const password = passwordInput.value;
 
-        forgetPasswordButton.addEventListener('click', showMessage);
-
-        document.getElementById('loginForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent the form from submitting the default way
-
-            const userId = document.getElementById('userid').value;
-            const password = document.getElementById('password').value;
-
-            firebase.auth().signInWithEmailAndPassword(userId, password)
-                .then((userCredential) => {
-                    // Signed in
-                    const user = userCredential.user;
-                    window.location.href = 'admin_dashboard.html'; // Redirect to admin dashboard
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert("Invalid Credentials");
-                });
+    // Sign in with email and password
+    firebase.auth().signInWithEmailAndPassword(userId, password)
+        .then((userCredential) => {
+            // Redirect to admin dashboard on successful login
+            window.location.href = 'admin_dashboard.html';
+        })
+        .catch((error) => {
+            // Handle login errors
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error(errorCode, errorMessage);
+            // Display error message to the user (e.g., show a message box)
+            alert(errorMessage);
         });
+});
+
     </script>
 </body>
 </html>
