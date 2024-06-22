@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - STEM Elites Club</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h1 {
+            color: #28b487;
+        }
+        h2 {
+            color: #333;
+        }
+        button {
+            background-color: #28b487;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #007d46;
+        }
+        .programmes {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .programmes h3 {
+            color: #007eff;
+        }
+        .programmes ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .programmes ul li {
+            margin: 10px 0;
+        }
+        .programmes ul li a {
+            color: #28b487;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .programmes ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to STEM Elites Club</h1>
+        <h2 id="welcomeMessage">Hello, [User Full Name]</h2>
+        <button id="logoutButton">Logout</button>
+
+        <div class="programmes">
+            <h3>Join Programmes</h3>
+            <ul>
+                <li><a href="https://vbadshah6472.github.io/STEM-Elites-Club/ctf-challenge.html" target="_blank">CTF - Solve The Puzzles</a></li>
+                <!-- Add more programmes here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"></script>
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
+            authDomain: "stem-elites-club.firebaseapp.com",
+            databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
+            projectId: "stem-elites-club",
+            storageBucket: "stem-elites-club.appspot.com",
+            messagingSenderId: "1005959264968",
+            appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // Get the current user's UserID from localStorage or another storage method used in your login flow
+        const userID = localStorage.getItem('userID');
+
+        // Fetch the user's full name from the database
+        database.ref('users/' + userID).once('value').then((snapshot) => {
+            if (snapshot.exists()) {
+                const userData = snapshot.val();
+                const firstName = userData.firstName; //
+                document.getElementById('welcomeMessage').textContent = 'Hello, ' + firstName;
+            } else {
+                console.error('User data not found');
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+
+        // Logout functionality
+        document.getElementById('logoutButton').addEventListener('click', () => {
+            auth.signOut().then(() => {
+                localStorage.removeItem('userID'); // Remove userID from localStorage
+                window.location.href = 'login.html'; // Redirect to login page
+            }).catch((error) => {
+                console.error(error);
+            });
+        });
+    </script>
+</body>
+</html>
