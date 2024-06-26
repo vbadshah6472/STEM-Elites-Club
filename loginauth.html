@@ -9,6 +9,20 @@
     <!-- Firebase JavaScript SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js"></script>
+     <script>
+  // Web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
+    authDomain: "stem-elites-club.firebaseapp.com",
+    databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
+    projectId: "stem-elites-club",
+    storageBucket: "stem-elites-club.appspot.com",
+    messagingSenderId: "1005959264968",
+    appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
+  };
+    
+firebase.initializeApp(firebaseConfig);
+ </script>
 
     <style>
         * {
@@ -193,22 +207,7 @@
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js"></script>
- <script>
-  // Web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
-    authDomain: "stem-elites-club.firebaseapp.com",
-    databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
-    projectId: "stem-elites-club",
-    storageBucket: "stem-elites-club.appspot.com",
-    messagingSenderId: "1005959264968",
-    appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
-  };
-    
-firebase.initializeApp(firebaseConfig);
-
+    <script>
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -219,10 +218,10 @@ firebase.initializeApp(firebaseConfig);
                 const userDoc = await db.collection('users').doc(userId).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
-                    if (userData.password === password) { 
-                        window.location.href = 'admin_dashboard.html'; // Redirect to dashboard
+                    if (userData.password === password) { // In a real app, validate hashed passwords
+                        window.location.href = 'dashboard.html'; // Redirect to dashboard
                     } else {
-                        alert('Incorrect UserID or password');
+                        alert('Incorrect user ID or password');
                     }
                 } else {
                     alert('User not found');
