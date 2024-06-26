@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEM Elites Club</title>
     <link rel="stylesheet" href="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous">
-    <style>
+   <style>
         * {
             margin: 0;
             padding: 0;
@@ -160,6 +160,9 @@
         }
     </style>
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
 </head>
 <body>
     <div class="container">
@@ -186,9 +189,6 @@
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
@@ -205,7 +205,7 @@
         const db = firebase.firestore();
 
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+            event.preventDefault(); // Prevent form from refreshing the page
 
             const userId = document.getElementById('userId').value;
             const password = document.getElementById('password').value;
@@ -215,7 +215,8 @@
                 if (userDoc.exists) {
                     const userData = userDoc.data();
                     if (userData.password === password) {
-                        window.location.href = 'admin_dashboard.html';
+                        // Redirect to dashboard
+                        window.location.href = 'dashboard.html';
                     } else {
                         alert('Incorrect user ID or password');
                     }
@@ -226,17 +227,7 @@
                 console.error('Error logging in:', error.message);
             }
         });
-
-        const forgetPasswordButton = document.querySelector('.forget-password');
-        const messageBox = document.getElementById('messageBox');
-        const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
-        forgetPasswordButton.addEventListener('click', () => {
-            messageBox.textContent = messageText;
-            messageBox.style.display = "block";
-            setTimeout(() => {
-                messageBox.style.display = "none";
-            }, 5000);
-        });
     </script>
 </body>
 </html>
+
