@@ -6,24 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>STEM Elites Club</title>
     <link rel="stylesheet" href="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous">
-    <!-- Firebase JavaScript SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js"></script>
-     <script>
-  // Web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
-    authDomain: "stem-elites-club.firebaseapp.com",
-    databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
-    projectId: "stem-elites-club",
-    storageBucket: "stem-elites-club.appspot.com",
-    messagingSenderId: "1005959264968",
-    appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
-  };
-    
-firebase.initializeApp(firebaseConfig);
- </script>
-
     <style>
         * {
             margin: 0;
@@ -42,8 +24,8 @@ firebase.initializeApp(firebaseConfig);
             justify-content: center;
         }
         .container {
-            width: 80%; /* Adjusted to 80% of viewport width */
-            max-width: 400px; /* Added to limit maximum width */
+            width: 80%;
+            max-width: 400px;
             height: 500px;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
@@ -57,7 +39,7 @@ firebase.initializeApp(firebaseConfig);
             position: relative;
         }
         h2 {
-            background: linear-gradient(to right, #007eff, #00b1ff); /* Blue gradient */
+            background: linear-gradient(to right, #007eff, #00b1ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-size: 2em;
@@ -108,7 +90,7 @@ firebase.initializeApp(firebaseConfig);
         }
         p > a {
             text-decoration: none;
-            color: #28b487; /* Change the color to green */
+            color: #28b487;
             font-weight: 600;
         }
         p > a:hover {
@@ -134,7 +116,7 @@ firebase.initializeApp(firebaseConfig);
             box-shadow: 0 0 20px rgba(0, 0, 255, 0.5);
         }
         .forget-password {
-            background: linear-gradient(to right, #ff4d4d, #ff1a1a); /* Red gradient */
+            background: linear-gradient(to right, #ff4d4d, #ff1a1a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 600;
@@ -147,18 +129,18 @@ firebase.initializeApp(firebaseConfig);
         }
         .forget-password-container {
             display: flex;
-            align-items: center; /* Align items vertically centered */
+            align-items: center;
             justify-content: space-between;
             width: 100%;
             padding: 0 10px;
-            margin-top: 25px; /* Add some margin */
+            margin-top: 25px;
         }
         .forget-password-container label {
-            color: #fff; /* White gradient for the label */
-            margin-left: 0px; /* Adjust margin to align text with checkbox */
+            color: #fff;
+            margin-left: 0px;
         }
         .message-box {
-            background-color: rgba(194, 7, 7, 0.8); /* More opaque background */
+            background-color: rgba(194, 7, 7, 0.8);
             padding: 10px 10px;
             border-radius: 8px;
             color: #f2f5f5;
@@ -168,17 +150,14 @@ firebase.initializeApp(firebaseConfig);
             display: none;
             max-width: 300px;
             text-align: center;
-        
         }
-
         #welcome-back {
-    font-size: 23px;
-    background: linear-gradient(to right, #28b487, #28b487);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin: 5px;
-}
-
+            font-size: 23px;
+            background: linear-gradient(to right, #28b487, #28b487);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 5px;
+        }
     </style>
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
 </head>
@@ -188,8 +167,8 @@ firebase.initializeApp(firebaseConfig);
         <h3 id="welcome-back">Welcome Back Elites</h3>
         <form id="loginForm">
             <div class="form-group">
-                <input type="text" id="userid" required>
-                <label for="userid">UserID</label>
+                <input type="text" id="userId" required>
+                <label for="userId">UserID</label>
                 <i class="fa-solid fa-user"></i>
             </div>
             <div class="form-group">
@@ -207,7 +186,24 @@ firebase.initializeApp(firebaseConfig);
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGRs6KPCWUI54sKcqLGr5Vg0jLzHCBVuI",
+            authDomain: "stem-elites-club.firebaseapp.com",
+            databaseURL: "https://stem-elites-club-default-rtdb.firebaseio.com",
+            projectId: "stem-elites-club",
+            storageBucket: "stem-elites-club.appspot.com",
+            messagingSenderId: "1005959264968",
+            appId: "1:1005959264968:web:b7e011e2c6e205612a03fd"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+
         document.getElementById('loginForm').addEventListener('submit', async function(event) {
             event.preventDefault();
 
@@ -218,8 +214,8 @@ firebase.initializeApp(firebaseConfig);
                 const userDoc = await db.collection('users').doc(userId).get();
                 if (userDoc.exists) {
                     const userData = userDoc.data();
-                    if (userData.password === password) { // In a real app, validate hashed passwords
-                        window.location.href = 'dashboard.html'; // Redirect to dashboard
+                    if (userData.password === password) {
+                        window.location.href = 'dashboard.html';
                     } else {
                         alert('Incorrect user ID or password');
                     }
@@ -229,6 +225,17 @@ firebase.initializeApp(firebaseConfig);
             } catch (error) {
                 console.error('Error logging in:', error.message);
             }
+        });
+
+        const forgetPasswordButton = document.querySelector('.forget-password');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = "Please contact the co-ordinator of The STeM Elites Club for the password recovery. Thank You!!";
+        forgetPasswordButton.addEventListener('click', () => {
+            messageBox.textContent = messageText;
+            messageBox.style.display = "block";
+            setTimeout(() => {
+                messageBox.style.display = "none";
+            }, 5000);
         });
     </script>
 </body>
