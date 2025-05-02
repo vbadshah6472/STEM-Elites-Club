@@ -160,7 +160,29 @@
     -webkit-text-fill-color: transparent;
     margin: 5px;
 }
-
+  	.shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        
+        @keyframes shake {
+            10%, 90% { transform: translateX(-1px); }
+            20%, 80% { transform: translateX(2px); }
+            30%, 50%, 70% { transform: translateX(-4px); }
+            40%, 60% { transform: translateX(4px); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .input-error {
+            border-color: #f87171 !important;
+            background-color: #fef2f2 !important;
     </style>
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
 </head>
@@ -169,7 +191,7 @@
     <div class="container">
         <h2>STEM ELITES CLUB</h2>
         <h3 id="welcome-back">Welcome Back Elites</h3>
-        <form action="">
+        <form action="" id="loginForm"  class="space-y-4">
             <div class="form-group">
                 <input type="text" required>
                 <label for="userid">UserID</label>
@@ -187,6 +209,18 @@
             </div>
             <div class="message-box" id="messageBox">Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!</div>
             <input id="btn" type="submit" value="Login">
+
+        <!-- Error message container (hidden by default) -->
+        <div id="errorMessage" class="hidden mb-4">
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded fade-in">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                    <span class="text-red-700 font-medium">Invalid credentials</span>
+                </div>
+                <p class="text-red-600 text-sm mt-1">Please check your username and password</p>
+            </div>
+        </div>
+		
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
     </div>
@@ -217,7 +251,12 @@
         }
 
         forgetPasswordButton.addEventListener('click', showMessage);
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();     
     </script>
+
+		
 <!-- Code injected by live-server -->
 <script>
 	// <![CDATA[  <-- For SVG support
@@ -275,9 +314,8 @@
     // 3. Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-
-    // 4. Login Form Submission Handling
-    const loginForm = document.getElementById('loginForm');
+	   // Simulate incorrect credentials
+const loginForm = document.getElementById('loginForm');
     loginForm.addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('email').value;
@@ -286,12 +324,40 @@
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           // Login successful
-          window.location.href = "dashboard.html";
+          window.location.href = "admin_dashboard.html";
         })
         .catch((error) => {
-          alert("Login failed: " + error.message);
+                showError();
+            }
         });
-    });
+        
+        function showError() {
+            const form = document.getElementById('loginForm');
+            const errorMessage = document.getElementById('errorMessage');
+            const inputs = form.querySelectorAll('input');
+            
+            // Show error message
+            errorMessage.classList.remove('hidden');
+            
+            // Add shake animation to form
+            form.classList.add('shake');
+            
+            // Add error styling to inputs
+            inputs.forEach(input => {
+                input.classList.add('input-error');
+                
+                // Remove error styling after 2 seconds
+                setTimeout(() => {
+                    input.classList.remove('input-error');
+                }, 2000);
+            });
+            
+            // Remove shake animation after it completes
+            setTimeout(() => {
+                form.classList.remove('shake');
+            }, 500);
+        }
+	  
   </script>
 </body>
 </html>
