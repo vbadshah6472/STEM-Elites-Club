@@ -159,7 +159,7 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     margin: 5px;
-}
+	}
   	.shake {
             animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
         }
@@ -183,6 +183,7 @@
         .input-error {
             border-color: #f87171 !important;
             background-color: #fef2f2 !important;
+		
     </style>
     <script src="https://kit.fontawesome.com/97ebdf5864.js" crossorigin="anonymous"></script>
 </head>
@@ -191,6 +192,18 @@
     <div class="container">
         <h2>STEM ELITES CLUB</h2>
         <h3 id="welcome-back">Welcome Back Elites</h3>
+
+	     <!-- Error message container (hidden by default) -->
+        <div id="errorMessage" class="hidden mb-4">
+            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded fade-in">
+                <div class="flex items-center">
+                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                    <span class="text-red-700 font-medium">Invalid credentials</span>
+                </div>
+                <p class="text-red-600 text-sm mt-1">Please check your username and password</p>
+            </div>
+        </div>
+	    
         <form action="" id="loginForm"  class="space-y-4">
             <div class="form-group">
                 <input type="text" required>
@@ -209,17 +222,6 @@
             </div>
             <div class="message-box" id="messageBox">Please contact your science teacher or any other superior STeM Elites Club Representatives for the password recovery. Thank You!!</div>
             <input id="btn" type="submit" value="Login">
-
-        <!-- Error message container (hidden by default) -->
-        <div id="errorMessage" class="hidden mb-4">
-            <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded fade-in">
-                <div class="flex items-center">
-                    <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
-                    <span class="text-red-700 font-medium">Invalid credentials</span>
-                </div>
-                <p class="text-red-600 text-sm mt-1">Please check your username and password</p>
-            </div>
-        </div>
 		
             <p>New To STEM Elites Club? <a href="signup.html">SignUp</a></p>
         </form>
